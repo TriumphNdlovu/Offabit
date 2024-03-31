@@ -1,28 +1,35 @@
-import { GeistSans } from "geist/font/sans";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
+const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
-  metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
-  description: "The fastest way to build apps with Next.js and Supabase",
+export const metadata: Metadata = {
+  title: "OfferBit",
+  description: "Swap, buy and sell items in your local area",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html lang="en" className={GeistSans.className}>
-      <body className="bg-background text-foreground">
-        <main className="min-h-screen flex flex-col items-center">
-          {children}
-        </main>
-      </body>
+    <html lang="en">
+      <body className= {inter.className}>
+        <div className="sticky top-1">
+          <Header/>
+        </div>
+
+        <div className="flex min-h-screen flex-col items-center justify-between w-full">
+            {children}
+        </div>
+          <div className="">
+            <Footer/>
+          </div>
+        </body>
     </html>
   );
 }
