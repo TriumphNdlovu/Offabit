@@ -1,5 +1,5 @@
 import { FaPhone } from 'react-icons/fa6';
-import { Post } from '../../Models/post';
+import { Post } from '../../app/Models/post'
 import { FaCalendar, FaToolbox } from 'react-icons/fa';
 
 interface IPostProps {
