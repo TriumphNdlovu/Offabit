@@ -2,6 +2,7 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import {Post} from "../Models/post";
 import IPost from "@/components/Post/page";
+import TheButton from "@/components/Button/Page";
 
 export default async function Profile() {
   const supabase = createClient();
@@ -12,6 +13,13 @@ export default async function Profile() {
 
   if (!user) {
     return redirect("/login");
+  }
+
+  function handleDelete(id: number): void {
+    throw new Error("Function not implemented.");
+  }
+  function handleEdit(id: number): void {
+    throw new Error("Function not implemented.");
   }
 
   // fill with mochdata
@@ -79,24 +87,42 @@ export default async function Profile() {
           Welcome, {user.email}
         </div>
 
-        <button className=" flex justify-end ">
-          Post Offer
-        </button>
 
       </div>
 
-      <div className="flex justify-between bg-blue-500 w-screen p-3:">
-      </div>
         <h1 className="text-xl flex justify-start" >My Offers</h1>
 
         <div className="grid grid-cols-4 gap-4 w-full p-5">
           {MyOffers.map((post: Post) => {
+            
+
             return (
-              <IPost key={post.id} post={post} />
+              <div>
+                <IPost key={post.id} post={post} />
+                <TheButton id={post.id} action="edit" />
+                <TheButton id={post.id} action="delete" />
+
+                {/* <button onClick={() => handleEdit(post.id)}>Edit</button>
+                <button onClick={() => handleDelete(post.id)}>Delete</button> */}
+              </div>              
+      
             );
           })}
         </div>
 
+
+        
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+
+        <TheButton id={0} action={"postbutton"}/>
+       <button
+        className="
+        fixed right-4 bottom-4 bg-blue-500 
+        text-white w-12 h-12 rounded-full flex 
+        items-center justify-center shadow-lg"
+        >
+          heeeeeeeeeey
+        </button>
    
 
     </div>
