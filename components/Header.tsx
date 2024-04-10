@@ -72,7 +72,7 @@ export default function Header() {
 
 
             <div className="flex items-center">
-                <Link href="/profile">
+                <Link href="/Pages/profile">
                             <div className="text-white rounded hover:border flex justify-between">
                         <FaUserCircle size={24} />
                         <div className="pl-2">

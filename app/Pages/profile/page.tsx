@@ -95,7 +95,7 @@ export default async function Profile() {
             <h1 className="title-font sm:text-4xl text-3xl text-center mb-2 font-medium text-white py-5">Your Offers</h1>
             
             <div className="py-5">
-              <Link href="/addpost">
+              <Link href="/Pages/add-post">
                 <button type="button"
                 className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 
                                                   focus:outline-none focus:ring-blue-300 font-medium rounded-lg 
