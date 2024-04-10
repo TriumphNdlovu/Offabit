@@ -6,9 +6,9 @@ import { FaPhone, FaUserCircle } from "react-icons/fa";
 export default function Header() {
   return (
     <div className="bg-opacity-90 bg-[#112D32] h-14 w-full sticky">
-        <div className="flex justify-between items-center h-full px-4">
-            <div className="flex items-center">
-                <Link href="/">
+        <div className="flex justify-between items-center h-full pr-20">
+            <div className=" items-center animate-jump-in animate-infinite">
+                <Link href="/" className="">
                     {/* <img src="/images/logo.svg" className="h-8" alt="OfferBit" /> */}
                     <span className="text-lg font-bold ml-2 text-white">OfferBit</span>
                 </Link>

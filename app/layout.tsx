@@ -19,13 +19,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className= {inter.className}>
-        <div className="sticky top-1">
+        <div className="sticky top-0">
           <Header/>
+          
         </div>
 
-        <div className="flex min-h-screen flex-col items-center justify-between w-full">
+        {/* <div className="flex min-h-screen flex-col items-center justify-between w-full"> */}
             {children}
-        </div>
+        {/* </div> */}
           <div className="">
             <Footer/>
           </div>
