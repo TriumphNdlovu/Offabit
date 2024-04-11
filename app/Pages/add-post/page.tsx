@@ -1,6 +1,6 @@
 'use client'
 import { Post } from "@/app/Models/post";
-import { FormEvent } from "react";
+import {addPost} from "@/app/Services/postService";
 
 export default async function Addpost() {
 
@@ -24,7 +24,7 @@ export default async function Addpost() {
             deliveryFee: form.Delivaryfee.value,
             postedAt: Date.now().toString(),
         };
-        console.log(newpost);
+        addPost(newpost);
     }
 
 
@@ -37,7 +37,7 @@ export default async function Addpost() {
 
             <div className="flex  w-screen px-5 justify-center">
                 
-<form className="flex px-5 border border-2 flex-col" onSubmit={handleSubmit}>
+<form className="flex px-5 border flex-col" onSubmit={handleSubmit}>
 <div className="p-5">
   <div className="flex items-center justify-center w-full">
     <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
@@ -130,75 +130,10 @@ export default async function Addpost() {
 
 </div>
 </div>
-
     <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Place Offer!</button>
-
-</form>
-
-
-            {/* <form className="flex justify-between text-center w-screen px-5 boarder boarder-2 flex-col">
-                <label>
-                    Title:
-                    <input type="text" name="title" />
-                </label>
-                <label>
-                    Description:
-                    <input type="text" name="description" />
-                </label>
-                <label>
-                    Sale Type:
-                    <select name="saleType">
-                        <option value="Sell">Sell</option>
-                        <option value="Rent">Rent</option>
-                    </select>
-                </label>
-                <label>
-                    Price:
-                    <input type="number" name="price" />
-                </label>
-                <label>
-                    Image:
-                    <input type="file" name="image" />
-                </label>
-                <label>
-                    Location:
-                    <input type="text" name="location" />
-                </label>
-                <label>
-                    Contact:
-                    <input type="text" name="contact" />
-                </label>
-                <label>
-                    Category:
-                    <input type="text" name="category" />
-                </label>
-                <label>
-                    Status:
-                    <select name="status">
-                        <option value="Available">Available</option>
-                        <option value="Sold">Sold</option>
-                    </select>
-                </label>
-                <label>
-                    Negotiable:
-                    <input type="checkbox" name="negotiable" />
-                </label>
-                <label>
-                    Condition:
-                    <input type="text" name="condition" />
-                </label>
-                <label>
-                    Delivery:
-                    <input type="checkbox" name="delivery" />
-                </label>
-                <label>
-                    Delivery Fee:
-                    <input type="number" name="deliveryFee" />
-                </label>
-                <button type="submit">Submit</button>
-            </form> */}
-        </div>
-        </div>
+    </form>
+  </div>
+</div>
            
     );
 }
