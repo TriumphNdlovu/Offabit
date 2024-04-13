@@ -19,7 +19,7 @@ export const addPost = async (post: Post) : Promise<void> =>
             price: post.price,
             image: post.image,
             location: post.location,
-            postedAt: post.postedAt,
+            postedAt: (new Date()).toISOString(),  
             contact: post.contact,
             category: post.category,
             status: post.status,
@@ -30,4 +30,30 @@ export const addPost = async (post: Post) : Promise<void> =>
         },
         ])
         .select()
+
+        if (error) {
+            console.log("There was an error adding the post to the database");
+            throw error;
+        }
+};
+
+// get posts by current user
+export const getPostsByUser = async (userId: string) : Promise<Post[]> => 
+{
+
+    const supabase = createClient();
+    const { data, error } = await supabase
+    .from('Offers')
+    .select('*')
+    .eq('userId', userId)
+    if (error) {
+        console.log("There was an error fetching the posts from the database");
+        throw error;
+    }
+
+    if (!data) {
+        console.log("No data found in the database");
+        return [];
+    }
+    return data;
 };

@@ -1,84 +1,31 @@
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
+'use client'
 import {Post} from "../../Models/post";
 import IPost from "@/components/Post/page";
-import TheButton from "@/components/Button/Page";
 import { FaUpload } from "react-icons/fa";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { getPostsService } from "@/Services/postService";
 
-export default async function Profile() {
-  const supabase = createClient();
+export default function Profile() {
+  let [myOffers, setMyOffers] = useState<Post[]>([]);
+  
+  // const supabase = createClient();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // const {
+  //   data: { user },
+  // } = await supabase.auth.getUser();
 
-  if (!user) {
-    return redirect("/login");
-  }
+  // if (!user) {
+  //   return redirect("/login");
+  // }
 
-  function handleDelete(id: number): void {
-    throw new Error("Function not implemented.");
-  }
-  function handleEdit(id: number): void {
-    throw new Error("Function not implemented.");
-  }
 
-  // fill with mochdata
-  const MyOffers: Post[] = [
-    {
-      id: 1,
-      title: "Macbook Pro 2020",
-      description: "Brand new Macbook Pro 2020",
-      saleType: "Sell",
-      price: 2000,
-      image: "https://images.unsplash.com/photo-1584138139844-6f3e7f7e5f3d",
-      location: "Lagos",
-      postedAt: "2022-02-02",
-      contact: "08012345678",
-      category: "Electronics",
-      status: "Available",
-      negotiable: true,
-      condition: "New",
-      delivery: true,
-      deliveryFee: 1000,
-    },
-    {
-      id: 2,
-      title: "Macbook Pro 2020",
-      description: "Brand new Macbook Pro 2020",
-      saleType: "Sell",
-      price: 2000,
-      image: "https://images.unsplash.com/photo-1584138139844-6f3e7f7e5f3d",
-      location: "Lagos",
-      postedAt: "2022-02-02",
-      contact: "08012345678",
-      category: "Electronics",
-      status: "Available",
-      negotiable: true,
-      condition: "New",
-      delivery: true,
-      deliveryFee: 1000,
-    },
-    {
-      id: 3,
-      title: "Macbook Pro 2020",
-      description: "Brand new Macbook Pro 2020",
-      saleType: "Sell",
-      price: 2000,
-      image: "https://images.unsplash.com/photo-1584138139844-6f3e7f7e5f3d",
-      location: "Lagos",
-      postedAt: "2022-02-02",
-      contact: "08012345678",
-      category: "Electronics",
-      status: "Available",
-      negotiable: true,
-      condition: "New",
-      delivery: true,
-      deliveryFee: 1000,
-    },
-    
-];
+  useEffect(() => {
+    getPostsService().then((posts: Post[]) => {
+      console.log(posts);
+      setMyOffers(posts);
+    });
+  }, []);
 
   return (
     <div>
@@ -86,7 +33,8 @@ export default async function Profile() {
             <h1 className="text-xl flex justify-start" >Profile</h1>
             
             <div>
-              Welcome, {user.email}
+              Welcome, Will deal with this later
+              {/* Welcome, {user.email} */}
             </div>
           </div>
             
@@ -111,7 +59,7 @@ export default async function Profile() {
           
               <div className="container px-5 py-5 mx-auto">
                     <div className="flex flex-wrap -m-4">
-                        {MyOffers.map((post: Post) => {
+                        {myOffers.map((post: Post) => {
                           return (
                                     <IPost key={post.id} post={post} />
                                   );
