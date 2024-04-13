@@ -1,5 +1,5 @@
 import {Post} from './Models/post';
-import getPostsmock from './Services/mockservice';
+import getPostsmock from '../Services/mockservice';
 import IPost from '../components/Post/page';
 
 

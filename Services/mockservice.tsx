@@ -1,4 +1,4 @@
-import { Post } from '../Models/post'; // Add the missing import statement
+import { Post } from '../app/Models/post'; // Add the missing import statement
 
 
 export default function getPostsmock(): Post[] {
