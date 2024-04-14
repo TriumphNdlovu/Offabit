@@ -1,6 +1,7 @@
 import { FaMapPin, FaPhone } from 'react-icons/fa6';
 import { Post } from '../../app/Models/post'
-import { FaCalendar, FaHandHolding, FaToolbox } from 'react-icons/fa';
+import { FaCalendar, FaEye, FaHandHolding, FaToolbox } from 'react-icons/fa';
+import Link from 'next/link';
 
 interface IPostProps {
     post: Post;
@@ -60,13 +61,22 @@ export default function IPost({post}: IPostProps) {
                       </div>
 
                       <div className="flex items-center justify-between flex-wrap">
-  <div className="w-1/2">
-    <h2 className="tracking-widest text-xs title-font text-white font-bold mb-1 rounded border-2 border-green-600">R{post.price}</h2>
-  </div>
-  <div className="w-1/2">
-    <a className="text-green-600 inline-flex items-center md:mb-2 lg:mb-0">View Offer</a>
-  </div>
-</div>
+                        <div className="w-1/2 p-2">
+                          <div className="tracking-widest  title-font p-2 text-white font-bold  rounded border-2 border-green-600">
+                            R{post.price}</div>
+                          </div>
+                     
+                          <Link href="/ViewOffer" className="w-1/2 p-2 ">
+                            <button className='border-2 rounded w-full flex items-center flex-wrap hover:text-white hover:border-gray-500'>
+                              <div className='pl-2'>
+                                <FaEye/>
+                              </div>
+                              <div className='p-2'>
+                                View Offer
+                              </div>
+                            </button>
+                          </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
