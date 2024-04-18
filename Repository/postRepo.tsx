@@ -57,3 +57,44 @@ export const getPostsByUser = async (userId: string) : Promise<Post[]> =>
     }
     return data;
 };
+
+// get post by id
+export const searchPostbyCategory = async (category: string) : Promise<Post[]> =>
+{
+    const supabase = createClient();
+    const { data, error } = await supabase
+    .from('Offers')
+    .select('*')
+    .eq('category', category)
+    if (error) {
+        console.log("There was an error fetching the posts from the database");
+        throw error;
+    }
+
+    if (!data) {
+        console.log("No data found in the database");
+        return [];
+    }
+    return data;
+}
+
+// get all offers
+export const getAlloffer = async () : Promise<Post[]> =>
+{
+    // 
+    const supabase = createClient();
+    const { data, error } = await supabase
+    .from('Offers')
+    .select('*')
+    .range(0, 9);
+    console.log(data);
+    if (error) {
+        console.log("There was an error fetching the posts from the database");
+        throw error;
+    }
+    if (!data) {
+        console.log("No data found in the database");
+        return [];
+    }
+    return data;
+}

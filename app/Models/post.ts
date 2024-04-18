@@ -14,7 +14,12 @@ export interface Post {
     condition: string;
     delivery: boolean;
     deliveryFee: number;
-
-    
-
+    userId: string;
+    user:{
+        id: string;
+        name: string;
+        email: string;
+        avatar: string;
+        contact: string;
+    }
 }

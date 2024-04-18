@@ -1,6 +1,6 @@
 import { createClient } from '@/utils/supabase/client';
 import {Post} from '../app/Models/post';
-import { addPost, getPostsByUser } from '@/Repository/postRepo';
+import { addPost, getPostsByUser, getAlloffer, searchPostbyCategory } from '@/Repository/postRepo';
 
 
 const  getCurrentUserID = async () => {
@@ -10,6 +10,19 @@ const  getCurrentUserID = async () => {
     } = await supabase.auth.getUser();
     return user!.id;
   }
+
+const getUserByID = async (id: string) => {
+    const supabase = createClient();
+    const { data, error } = await supabase
+      .from('Users')
+      .select('*')
+      .eq('userId', id)
+      .single();
+    if (error) throw error;
+
+    // console.log(data);
+    return data;
+  } 
 
 // add new post function
 export const addPostService = async (post: Post) => 
@@ -28,3 +41,21 @@ export const getPostsService = async () =>
     );
     return posts;
 };
+
+export const getAllofferService = async () => {
+
+  const posts = await getAlloffer();
+  const postsWithUser = await Promise.all(posts.map(async (post) => {
+    const user = await getUserByID(post.userId);
+    return {...post, user};
+  }
+  ));
+
+  return postsWithUser;
+}
+
+export const searchPostbyCategoryService = async (category: string) => {
+  if(category === 'All categories') return getAllofferService();
+  const posts = await searchPostbyCategory(category);
+  return posts;
+}

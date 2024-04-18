@@ -34,7 +34,7 @@ const AddPostForm: React.FC = () => {
             description: form.Description.value,
             saleType: form.Rentable.value ? "Rent" : "Sell",
             price: form.Price.value,
-            image: "https://images.unsplash.com/photo-1584138139844-6f3e7f7e5f3d",
+            image: "http://via.placeholder.com/640x360",
             location: form.Location.value,
             contact: form.phone.value,
             category: form.Category.value,
@@ -44,6 +44,7 @@ const AddPostForm: React.FC = () => {
             delivery: true,
             deliveryFee: form.Delivaryfee.value,
             postedAt: Date.now().toString(),
+            userid: "1234"
         };
         
         addPostService(newpost);
@@ -109,13 +110,13 @@ const AddPostForm: React.FC = () => {
   <div className="flex flex-col">
     <label htmlFor="Category" className="block mb-2 text-sm font-medium dark:text-white">Category</label>
     <select id="Category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-      <option selected>Select Item Category</option>
+      <option selected>Other</option>
       <option>Electronics</option>
-      <option>Home & Garden</option>
       <option>Books</option>
-      <option>Automotive</option>
-      <option>Services</option>
-      <option>Other</option>
+      <option>Furniture</option>
+      <option>Clothing</option>
+      <option>Accessories</option>
+
     </select>
   </div>
 

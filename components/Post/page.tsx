@@ -1,6 +1,6 @@
 import { FaMapPin, FaPhone } from 'react-icons/fa6';
 import { Post } from '../../app/Models/post'
-import { FaCalendar, FaEye, FaHandHolding, FaToolbox } from 'react-icons/fa';
+import {  FaEye, FaHandHolding } from 'react-icons/fa';
 import Link from 'next/link';
 
 interface IPostProps {
@@ -10,42 +10,19 @@ interface IPostProps {
 export default function IPost({post}: IPostProps) {
     return (
 
-        // <div key={post.id} className="bg-[#112D32] p-4 shadow-md rounded">
-        //     <img src={post.image} alt={post.title} className="w-full h-48 object-cover" />
-            
-        //     <div className="p-4">
-        //         <h2 className="text-xl font-bold text-white">{post.title}</h2>
-        //         <div className="flex">
-        //             <p className="text-lg text-green-600">R{post.price}</p> 
-        //             <p className="text-sm text-blue-900 pl-1">{post.status}</p>
-        //         </div>
-        //         <p className="text-sm text-white">Description</p>
-                
-        //         <div className="text-white border border-white">
-        //             <p className="text-xs p-2">{post.description}</p>
-        //         </div>
-
-        //         <div className='flex pt-1 text-white'>
-        //             <FaPhone/> 
-        //             <p className="text-sm text-white pl-2">{post.contact}</p>
-        //         </div>
-
-        //         <div className='flex pt-1 text-white'>
-        //             <FaToolbox/>
-        //             <p className="text-sm text-white pl-2">{post.condition}</p>
-        //         </div>
-
-        //         <div className='flex pt-1 text-white'>
-        //             <FaCalendar/>
-        //             <p className="text-sm text-white pl-2">{post.postedAt}</p>
-        //         </div>
-                
-        // </div>
-        // </div>
       <div className="p-4 md:w-1/3">
         <div className="h-full border-2 border-gray-800 rounded-lg overflow-hidden hover:border-gray-500">
                     <img className="lg:h-48 md:h-36 w-full object-cover object-center" src={post.image} alt="Product Image" />
                     <div className="p-6">
+                      {/* //profile avatar */}
+                      {/* profile name */}
+                      <h1 className="">
+                        <img className="w-10 h-10 rounded-full flex-shrink-0 object-cover object-center" src={
+                          post.user.avatar} alt="avatar" />
+                        <span className="flex-grow flex flex-col pl-4">
+                          <span className="title-font font-medium text-white">{post.user.name}</span>
+                        </span>
+                      </h1>
                       <h2 className="tracking-widest text-xs title-font font-medium text-gray-500 mb-1">{post.category}</h2>
                       <h1 className="title-font text-lg font-medium text-white mb-3">{post.title}</h1>
                       <p className="leading-relaxed mb-3">{post.description}</p>
