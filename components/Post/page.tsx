@@ -1,18 +1,57 @@
+'use client'
 import { FaMapPin, FaPhone } from 'react-icons/fa6';
 import { Post } from '../../app/Models/post'
 import {  FaEye, FaHandHolding } from 'react-icons/fa';
 import Link from 'next/link';
+import { useEffect } from 'react';
 
 interface IPostProps {
     post: Post;
 }
 
+
+
+const postImage = 'https://jvaowrfcrjgzizfytpgd.supabase.co/storage/v1/object/public/mediacontent/21b1eb30-a84b-4d82-90dc-d13b7c19ed3a/1b343dc5-0ef8-4873-b919-99d67d70d08f.jpg'
+
+
 export default function IPost({post}: IPostProps) {
+
+  async function fetchImageUrls() {
+    try {
+        const response = await fetch('https://jvaowrfcrjgzizfytpgd.supabase.co/storage/v1/object/public/mediacontent/21b1eb30-a84b-4d82-90dc-d13b7c19ed3a/1b343dc5-0ef8-4873-b919-99d67d70d08f');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching image URLs:', error);
+        return [];
+    }
+  }
+  
+  
+  
+  async function displayImages() {
+    const imageContainer = document.getElementById('image-container');
+    const imageUrls = await fetchImageUrls();
+  
+    // Loop through image URLs and create <img> elements
+    imageUrls.forEach((url: string) => {
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = 'Image';
+        imageContainer!.appendChild(img);
+    });
+  }
+
+  useEffect (() => 
+    {
+      displayImages();
+    },[]);
+    
     return (
 
       <div className="p-4 md:w-1/3">
         <div className="h-full border-2 border-gray-800 rounded-lg overflow-hidden hover:border-gray-500">
-                    <img className="lg:h-48 md:h-36 w-full object-cover object-center" src={post.image} alt="Product Image" />
+                    <img className="lg:h-48 md:h-36 w-full object-cover object-center" src={postImage} alt="Product Image" />
                     <div className="p-6">
                       {/* //profile avatar */}
                       {/* profile name */}
@@ -55,7 +94,10 @@ export default function IPost({post}: IPostProps) {
                           </Link>
                       </div>
                     </div>
+                  <div id="image-container"></div>
                   </div>
+                    
+                  
                 </div>
               );
           }

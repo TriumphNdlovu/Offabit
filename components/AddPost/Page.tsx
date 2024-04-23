@@ -28,13 +28,16 @@ const AddPostForm: React.FC = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
         const form = e.currentTarget;
+        const formData = new FormData(form);
+        const file = formData.get('Picture') as File;
+
         const newpost :Post = {
             id: 1,
             title: form.Title.value,
             description: form.Description.value,
             saleType: form.Rentable.value ? "Rent" : "Sell",
             price: form.Price.value,
-            image: "http://via.placeholder.com/640x360",
+            image: file.name,
             location: form.Location.value,
             contact: form.phone.value,
             category: form.Category.value,
@@ -44,10 +47,18 @@ const AddPostForm: React.FC = () => {
             delivery: true,
             deliveryFee: form.Delivaryfee.value,
             postedAt: Date.now().toString(),
-            userid: "1234"
+            userId: "1234",
+            user: {
+                id: "1234",
+                name: "John",
+                email: "jdoe@gamil.com",
+                avatar: "https://via.placeholder.com/150",
+                contact: "08012345678"
+            },
+            PostId: "1234"
         };
         
-        addPostService(newpost);
+        addPostService(newpost, file);
   };
 
   return (

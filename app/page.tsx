@@ -1,6 +1,5 @@
 'use client'
 import { Post } from './Models/post';
-import getPostsmock from '../Services/mockservice';
 import IPost from '../components/Post/page';
 import { useEffect, useState } from 'react';
 import { getAllofferService, searchPostbyCategoryService } from '@/Services/postService';

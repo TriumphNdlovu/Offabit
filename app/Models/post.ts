@@ -1,5 +1,6 @@
 export interface Post {
     id: number;
+    PostId: string;
     title: string;
     description: string;
     saleType: string;

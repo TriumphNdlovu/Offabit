@@ -8,6 +8,9 @@ const  getCurrentUserID = async () => {
     const {
       data: { user },
     } = await supabase.auth.getUser();
+    if (!user) {
+      throw new Error('User not found');
+    }
     return user!.id;
   }
 
@@ -25,22 +28,50 @@ const getUserByID = async (id: string) => {
   } 
 
 // add new post function
-export const addPostService = async (post: Post) => 
-{
-    addPost(post);
+export const addPostService = async (post: Post, image: File) => {
+  const imageData = {
+      name: image.name,
+      data: image
+  };
+
+      const contentType = 'image/png';
+
+        console.log(image.name)
+        console.log(image)
+        console.log(`public/${uniquePostID}/${image.name}`)
+
+            const { data: imageUploadData, error: imageUploadError } = await supabase.storage
+                .from('mediacontent')
+                .upload(`public/${uniquePostID}/${image.name}`, image, {
+                    contentType: contentType,
+                });
+            console.log(imageUploadData);
+
+            if (error) {
+                console.log("There was an error adding the post to the database");
+                throw error;
+            }
+        } else {
+            console.log("No data found in the database");
+        }
+
+  addPost(post, null);
 };
+
 
 // get all posts function
 export const getPostsService = async () => 
 {
     const userId = await getCurrentUserID();
     const posts = await getPostsByUser(userId);
-    posts.sort((a, b) => {
-        return new Date(b.postedAt).getTime() - new Date(a.postedAt).getTime();
+
+    const postsWithUser = await Promise.all(posts.map(async (post) => {
+      const user = await getUserByID(post.userId);
+      return {...post, user};
     }
-    );
-    return posts;
-};
+    ));
+    return postsWithUser;
+}
 
 export const getAllofferService = async () => {
 
