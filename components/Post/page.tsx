@@ -51,7 +51,7 @@ export default function IPost({post}: IPostProps) {
                             R{post.price}</div>
                           </div>
                      
-                          <Link href="../Pages/viewOffer" className="w-1/2 p-2 ">
+                          <Link href={`../Pages/viewOffer?${post.PostId}`} className="w-1/2 p-2 ">
                             <button className='border-2 rounded w-full flex items-center flex-wrap hover:text-white hover:border-gray-500'>
                               <div className='pl-2'>
                                 <FaEye/>

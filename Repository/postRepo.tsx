@@ -117,4 +117,24 @@ export const getAlloffer = async () : Promise<Post[]> =>
     return data;
 }
 
+export const getPostsByPostID = async (postId: string) : Promise<Post> =>
+{
+    const supabase = createClient();
+    const { data, error } = await supabase
+    .from('Offers')
+    .select('*')
+    .eq('PostId', postId)
+    .single();
+    if (error) {
+        console.log("There was an error fetching the posts from the database");
+        throw error;
+    }
+
+    if (!data) {
+        console.log("No data found in the database");
+        return {} as Post;
+    }
+    return data;
+}
+
 

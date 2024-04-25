@@ -1,6 +1,6 @@
 import { createClient } from '@/utils/supabase/client';
 import {Post} from '../app/Models/post';
-import { addPost, getPostsByUser, getAlloffer, searchPostbyCategory } from '@/Repository/postRepo';
+import { addPost, getPostsByUser, getAlloffer, searchPostbyCategory, getPostsByPostID } from '@/Repository/postRepo';
 
 
 const  getCurrentUserID = async () => {
@@ -113,4 +113,13 @@ export const searchPostbyCategoryService = async (category: string) => {
   if(category === 'All categories') return getAllofferService();
   const posts = await searchPostbyCategory(category);
   return posts;
+}
+
+export const getPostbyPostIDService = async (Postid: string) => {
+
+  const post = await getPostsByPostID(Postid);
+  const user = await getUserByID(post.userId);
+  const postsWithUser = {...post, user};
+
+  return postsWithUser;
 }
