@@ -17,7 +17,7 @@ const  getCurrentUserID = async () => {
   }
 
 // add new post function
-export const addPost = async (post: Post, image: {name: string,data: File}) : Promise<void> => 
+export const addPost = async (post: Post) : Promise<string> => 
     {
         const uniquePostID = v4();
         post.PostId = uniquePostID; 
@@ -46,30 +46,15 @@ export const addPost = async (post: Post, image: {name: string,data: File}) : Pr
         ])
         .select()
 
-        // upload image blob to sup
-
-        // const contentType = 'image/png';
-
-        // console.log(image.name)
-        // console.log(image)
-        // console.log(`public/${uniquePostID}/${image.name}`)
-
-        // if (data && data.length > 0) {
-        //     const { data: imageUploadData, error: imageUploadError } = await supabase.storage
-        //         .from('mediacontent')
-        //         .upload(`public/${uniquePostID}/${image.name}`, data[0].Image, {
-        //             contentType: contentType,
-        //         });
-        //     console.log(imageUploadData);
-
-        //     if (error) {
-        //         console.log("There was an error adding the post to the database");
-        //         throw error;
-        //     }
-        // } else {
-        //     console.log("No data found in the database");
-        // }
-};
+        if (error) {
+            console.log("There was an error adding the post to the database");
+            throw error;
+        }else
+        {
+            console.log("Post added successfully");
+            return post.PostId;
+        }
+    }
 
 // get posts by current user
 export const getPostsByUser = async (userId: string) : Promise<Post[]> => 

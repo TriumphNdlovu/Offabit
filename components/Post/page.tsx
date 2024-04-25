@@ -11,40 +11,19 @@ interface IPostProps {
 
 
 
-const postImage = 'https://jvaowrfcrjgzizfytpgd.supabase.co/storage/v1/object/public/mediacontent/21b1eb30-a84b-4d82-90dc-d13b7c19ed3a/1b343dc5-0ef8-4873-b919-99d67d70d08f.jpg'
+const postImage = 'https://jvaowrfcrjgzizfytpgd.supabase.co/storage/v1/object/public/mediacontent/21b1eb30-a84b-4d82-90dc-d13b7c19ed3a/PostImages/a5f542e3-c487-401f-9fec-1ead345157ec+Screenshot_2024-04-08_00-25-24.png'
 
 
 export default function IPost({post}: IPostProps) {
 
-  async function fetchImageUrls() {
-    try {
-        const response = await fetch('https://jvaowrfcrjgzizfytpgd.supabase.co/storage/v1/object/public/mediacontent/21b1eb30-a84b-4d82-90dc-d13b7c19ed3a/1b343dc5-0ef8-4873-b919-99d67d70d08f');
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error fetching image URLs:', error);
-        return [];
-    }
-  }
+
   
   
   
-  async function displayImages() {
-    const imageContainer = document.getElementById('image-container');
-    const imageUrls = await fetchImageUrls();
-  
-    // Loop through image URLs and create <img> elements
-    imageUrls.forEach((url: string) => {
-        const img = document.createElement('img');
-        img.src = url;
-        img.alt = 'Image';
-        imageContainer!.appendChild(img);
-    });
-  }
 
   useEffect (() => 
     {
-      displayImages();
+ 
     },[]);
     
     return (

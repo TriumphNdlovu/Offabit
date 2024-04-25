@@ -1,7 +1,6 @@
 import { createClient } from '@/utils/supabase/client';
 import {Post} from '../app/Models/post';
 import { addPost, getPostsByUser, getAlloffer, searchPostbyCategory } from '@/Repository/postRepo';
-import {v4} from 'uuid';
 
 
 const  getCurrentUserID = async () => {
@@ -38,17 +37,16 @@ export const addPostService = async (post: Post, image: File) => {
       data: image
   };
 
-  addPost(post, imageData);
+   const PostID = await addPost(post);
 
       console.log(image.name)
       console.log(image)
-      const uniquePostID = v4();
       const currentUserID = await getCurrentUserID();
       console.log(`${currentUserID}/PostImages/${image.name}`)
 
       const { data: imageUploadData, error: imageUploadError } = await supabase.storage
         .from('mediacontent')
-        .upload(`${currentUserID}/PostImages/${uniquePostID}+${image.name}`, image, {
+        .upload(`${currentUserID}/PostImages/${PostID}+${image.name}`, image, {
           contentType: imageData.data.type,
         });
 
@@ -77,12 +75,16 @@ export const getPostsService = async () =>
     return postsWithUser;
 }
 
+
 export const getAllofferService = async () => {
 
   const posts = await getAlloffer();
   const postsWithUser = await Promise.all(posts.map(async (post) => {
     const user = await getUserByID(post.userId);
-    return {...post, user};
+    return {
+      ...post, user
+    
+    };
   }
   ));
 
