@@ -50,10 +50,28 @@ export const addPostService = async (post: Post, image: File) => {
           contentType: imageData.data.type,
         });
 
-       if (imageUploadError) {
+
+      if (imageUploadError) {
         console.error('Error uploading image:', imageUploadError.message);
         return; 
       }
+      else
+      {
+        console.log('Image uploaded successfully');
+        //now update th image path from the post table
+        const { data: updatedPost, error
+        } = await supabase
+        .from('Offers')
+        .update({ image: `https://jvaowrfcrjgzizfytpgd.supabase.co/storage/v1/object/public/mediacontent/${imageUploadData}` })
+        .eq('PostId', PostID);
+        if (error) {
+          console.error('Error updating post:', error.message);
+          return;
+        }
+        console.log('Post updated successfully');
+
+      }
+
 
       console.log(imageUploadData);
 

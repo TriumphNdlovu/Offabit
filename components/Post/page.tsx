@@ -9,28 +9,18 @@ interface IPostProps {
     post: Post;
 }
 
-
-
-const postImage = 'https://jvaowrfcrjgzizfytpgd.supabase.co/storage/v1/object/public/mediacontent/21b1eb30-a84b-4d82-90dc-d13b7c19ed3a/PostImages/a5f542e3-c487-401f-9fec-1ead345157ec+Screenshot_2024-04-08_00-25-24.png'
-
-
 export default function IPost({post}: IPostProps) {
-
-
-  
-  
-  
 
   useEffect (() => 
     {
  
-    },[]);
+    },[post]);
     
     return (
 
       <div className="p-4 md:w-1/3">
         <div className="h-full border-2 border-gray-800 rounded-lg overflow-hidden hover:border-gray-500">
-                    <img className="lg:h-48 md:h-36 w-full object-cover object-center" src={postImage} alt="Product Image" />
+                    <img className="lg:h-48 md:h-36 w-full object-cover object-center" src={post.image} alt="Product Image" />
                     <div className="p-6">
                       {/* //profile avatar */}
                       {/* profile name */}
@@ -61,7 +51,7 @@ export default function IPost({post}: IPostProps) {
                             R{post.price}</div>
                           </div>
                      
-                          <Link href="/ViewOffer" className="w-1/2 p-2 ">
+                          <Link href="../Pages/viewOffer" className="w-1/2 p-2 ">
                             <button className='border-2 rounded w-full flex items-center flex-wrap hover:text-white hover:border-gray-500'>
                               <div className='pl-2'>
                                 <FaEye/>
@@ -73,7 +63,6 @@ export default function IPost({post}: IPostProps) {
                           </Link>
                       </div>
                     </div>
-                  <div id="image-container"></div>
                   </div>
                     
                   

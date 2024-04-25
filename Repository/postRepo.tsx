@@ -21,7 +21,6 @@ export const addPost = async (post: Post) : Promise<string> =>
     {
         const uniquePostID = v4();
         post.PostId = uniquePostID; 
-        console.log("I added the new post to the database");
         const supabase = createClient();
         const { data, error } = await supabase
         .from('Offers')
