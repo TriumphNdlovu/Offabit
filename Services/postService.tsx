@@ -1,6 +1,7 @@
 import { createClient } from '@/utils/supabase/client';
 import {Post} from '../app/Models/post';
 import { addPost, getPostsByUser, getAlloffer, searchPostbyCategory } from '@/Repository/postRepo';
+import {v4} from 'uuid';
 
 
 const  getCurrentUserID = async () => {
@@ -27,35 +28,38 @@ const getUserByID = async (id: string) => {
     return data;
   } 
 
+  
+
 // add new post function
 export const addPostService = async (post: Post, image: File) => {
+  const supabase = createClient();
   const imageData = {
       name: image.name,
       data: image
   };
 
-      const contentType = 'image/png';
+  addPost(post, imageData);
 
-        console.log(image.name)
-        console.log(image)
-        console.log(`public/${uniquePostID}/${image.name}`)
+      console.log(image.name)
+      console.log(image)
+      const uniquePostID = v4();
+      const currentUserID = await getCurrentUserID();
+      console.log(`${currentUserID}/PostImages/${image.name}`)
 
-            const { data: imageUploadData, error: imageUploadError } = await supabase.storage
-                .from('mediacontent')
-                .upload(`public/${uniquePostID}/${image.name}`, image, {
-                    contentType: contentType,
-                });
-            console.log(imageUploadData);
+      const { data: imageUploadData, error: imageUploadError } = await supabase.storage
+        .from('mediacontent')
+        .upload(`${currentUserID}/PostImages/${uniquePostID}+${image.name}`, image, {
+          contentType: imageData.data.type,
+        });
 
-            if (error) {
-                console.log("There was an error adding the post to the database");
-                throw error;
-            }
-        } else {
-            console.log("No data found in the database");
-        }
+       if (imageUploadError) {
+        console.error('Error uploading image:', imageUploadError.message);
+        return; 
+      }
 
-  addPost(post, null);
+      console.log(imageUploadData);
+
+
 };
 
 
