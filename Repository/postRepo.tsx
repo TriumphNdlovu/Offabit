@@ -137,4 +137,17 @@ export const getPostsByPostID = async (postId: string) : Promise<Post> =>
     return data;
 }
 
+export const deleteByPostID = async (postId: string) => {
+    const supabase = createClient();
+    const { error } = await supabase
+    .from('Offers')
+    .delete()
+    .eq('PostId', postId);
+    if (error) {
+        console.log("There was an error deleting the post from the database");
+        throw error;
+    }
+    console.log("Post deleted successfully");
+}
+
 

@@ -1,6 +1,6 @@
 import { createClient } from '@/utils/supabase/client';
 import {Post} from '../app/Models/post';
-import { addPost, getPostsByUser, getAlloffer, searchPostbyCategory, getPostsByPostID } from '@/Repository/postRepo';
+import { addPost, getPostsByUser, getAlloffer, searchPostbyCategory, getPostsByPostID, deleteByPostID } from '@/Repository/postRepo';
 
 
 export const  getCurrentUserID = async () => {
@@ -27,6 +27,9 @@ const getUserByID = async (id: string) => {
     return data;
   } 
 
+export const deleteByPostIDService = async (PostID: string) => {
+   deleteByPostID(PostID);
+}
   
 
 // add new post function
@@ -62,7 +65,7 @@ export const addPostService = async (post: Post, image: File) => {
         const { data: updatedPost, error
         } = await supabase
         .from('Offers')
-        .update({ image: `https://jvaowrfcrjgzizfytpgd.supabase.co/storage/v1/object/public/mediacontent/${imageUploadData}` })
+        .update({ image: `https://jvaowrfcrjgzizfytpgd.supabase.co/storage/v1/object/public/mediacontent/${imageUploadData.path}` })
         .eq('PostId', PostID);
         if (error) {
           console.error('Error updating post:', error.message);

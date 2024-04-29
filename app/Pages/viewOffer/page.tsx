@@ -1,11 +1,10 @@
 'use client'
-import { getCurrentUserID, getPostbyPostIDService } from "@/Services/postService"
+import { deleteByPostIDService, getCurrentUserID, getPostbyPostIDService } from "@/Services/postService"
 import { Post } from "@/app/Models/post";
 import { get } from "http";
 import { useEffect, useState } from "react";
-export default async function Viewoffer() 
-{
 
+export default function Viewoffer() {
 
     const [PostID, setPostID] = useState<string | null>(null);
     const [post, setPost] = useState<Post>();
@@ -13,74 +12,85 @@ export default async function Viewoffer()
     const [editMode, setEditMode] = useState(false);
     const [isPostOwner, setIsPostOwner] = useState(false);
 
-
     useEffect(() => {
         const currentUrl = window.location.href;
         let PostID = currentUrl.split('?')[1];
-        //remove the last character
-        // PostID = PostID.substring(0, PostID.length - 1);
         setPostID(PostID);
-        
+
         if (PostID) {
-             getPostbyPostIDService(PostID).then((rpost: Post) => {
-               console.log(rpost);
-                setPost(rpost);
-            });
-        }else{
-            //redirect to 404 page
+             getPostbyPostIDService(PostID)
+                .then((rpost: Post) => {
+                    console.log(rpost);
+                    setPost(rpost);
+                    fetchData(rpost);
+                })
+                .catch(() => {
+                    console.log("Error fetching post");
+                    setLoading(false);
+                });
+        } else {
             console.log("Post ID is not found");
+            setLoading(false);
         }
-        const fetchData = async () => {
-          if (post) {
-            const result = await PostOwner(post.user.id);
-            setIsPostOwner(result);
-          }
-          setLoading(false);
-        };
+    }, []);
 
-        fetchData();
-       
-        setLoading(false);
-
-    }, [post]);
-    
-    const PostOwner = async (userID: string) => {
-      const id = await getCurrentUserID();
-      return id === userID;
+    const fetchData = (post: Post) => {
+        PostOwner(post.userId)
+            .then(result => {
+                setIsPostOwner(result);
+                setLoading(false);
+            })
+            .catch(() => {
+                console.log("Error fetching data");
+                setLoading(false);
+            });
     };
 
-
-
-
-    if (loading) {
-      return <div>Loading...</div>;
-    }
+    const PostOwner = (userID: string) => {
+      console.log("")
+        return getCurrentUserID()
+            .then(id => id === userID)
+            .catch(() => {
+                console.log("Error fetching user ID");
+                return false;
+            });
+    };
 
     const handleChange = (e: { target: { name: any; value: any; }; }) => {
-      const { name, value } = e.target;
-      setPost({ ...post!, [name]: value });
+        const { name, value } = e.target;
+        setPost({ ...post!, [name]: value });
     };
-  
-
 
     const handleSubmit = (e: { preventDefault: () => void; }) => {
-      e.preventDefault();
-      // Handle submission logic here, e.g., updating the post
-      console.log("Updated Post:", post!);
+        e.preventDefault();
+        
+        console.log("Updated Post:", post!);
     };
 
     const handleEdit = () => {
-      setEditMode(!editMode);
+        setEditMode(!editMode);
     };
 
-    
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+  function handleDelete(post:Post): void {
+    deleteByPostIDService(post.PostId);
+  }
 
     return post ? (
         // Inside the form component
 <form className="flex px-5 border flex-col lex items-center justify-center" onSubmit={handleSubmit}>
   <div className="p-5 w-9/12 bg-sky-950">
 
-  {isPostOwner ? (<button onClick={handleEdit} className="mb-4 justify-end">Edit</button>)
+  {isPostOwner ? 
+  (
+    <div>
+      <button onClick={handleEdit} className="mb-4 justify-end">Edit</button>
+      <button onClick={()=>handleDelete(post)} className="mb-4 justify-end">Delete</button>
+    </div>
+  
+)
   : null}
     <div className="flex items-center justify-center w-full">
         {/* <h1 className="text-2xl font-medium text-white">{post?.user.name}</h1> */}
