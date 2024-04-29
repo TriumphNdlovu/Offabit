@@ -1,8 +1,9 @@
 'use client'
-import { getPostbyPostIDService } from "@/Services/postService"
+import { getCurrentUserID, getPostbyPostIDService } from "@/Services/postService"
 import { Post } from "@/app/Models/post";
+import { get } from "http";
 import { useEffect, useState } from "react";
-export default function Viewoffer() 
+export default async function Viewoffer() 
 {
 
 
@@ -10,6 +11,8 @@ export default function Viewoffer()
     const [post, setPost] = useState<Post>();
     const [loading, setLoading] = useState(true);
     const [editMode, setEditMode] = useState(false);
+    const [isPostOwner, setIsPostOwner] = useState(false);
+
 
     useEffect(() => {
         const currentUrl = window.location.href;
@@ -27,10 +30,28 @@ export default function Viewoffer()
             //redirect to 404 page
             console.log("Post ID is not found");
         }
+        const fetchData = async () => {
+          if (post) {
+            const result = await PostOwner(post.user.id);
+            setIsPostOwner(result);
+          }
+          setLoading(false);
+        };
+
+        fetchData();
+       
         setLoading(false);
 
-    }, [PostID]);
+    }, [post]);
     
+    const PostOwner = async (userID: string) => {
+      const id = await getCurrentUserID();
+      return id === userID;
+    };
+
+
+
+
     if (loading) {
       return <div>Loading...</div>;
     }
@@ -40,6 +61,8 @@ export default function Viewoffer()
       setPost({ ...post!, [name]: value });
     };
   
+
+
     const handleSubmit = (e: { preventDefault: () => void; }) => {
       e.preventDefault();
       // Handle submission logic here, e.g., updating the post
@@ -47,14 +70,18 @@ export default function Viewoffer()
     };
 
     const handleEdit = () => {
-      setEditMode(true);
+      setEditMode(!editMode);
     };
+
+    
 
     return post ? (
         // Inside the form component
 <form className="flex px-5 border flex-col lex items-center justify-center" onSubmit={handleSubmit}>
   <div className="p-5 w-9/12 bg-sky-950">
-  <button onClick={handleEdit} className="mb-4">Edit</button>
+
+  {isPostOwner ? (<button onClick={handleEdit} className="mb-4 justify-end">Edit</button>)
+  : null}
     <div className="flex items-center justify-center w-full">
         {/* <h1 className="text-2xl font-medium text-white">{post?.user.name}</h1> */}
         {/* //Display the Post Image */}

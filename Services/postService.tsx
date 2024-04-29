@@ -3,7 +3,7 @@ import {Post} from '../app/Models/post';
 import { addPost, getPostsByUser, getAlloffer, searchPostbyCategory, getPostsByPostID } from '@/Repository/postRepo';
 
 
-const  getCurrentUserID = async () => {
+export const  getCurrentUserID = async () => {
     const supabase = createClient();
     const {
       data: { user },
