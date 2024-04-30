@@ -82,7 +82,8 @@ export default function Viewoffer() {
 <form className="flex px-5 border flex-col lex items-center justify-center" onSubmit={handleSubmit}>
   <div className="p-5 w-9/12 bg-sky-950">
 
-        
+       
+
   {isPostOwner ? 
   (
     <div className="flex justify-between text-white">
