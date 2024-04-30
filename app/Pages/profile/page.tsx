@@ -4,10 +4,13 @@ import IPost from "@/components/Post/page";
 import { FaUpload } from "react-icons/fa";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getPostsService } from "@/Services/postService";
+import { checkifAuthenticatedService, getPostsService } from "@/Services/postService";
+import { redirect } from "next/navigation";
 
 export default function Profile() {
   let [myOffers, setMyOffers] = useState<Post[]>([]);
+  let [user, setUser] = useState<any>(null);
+  let [loading, setLoading] = useState<boolean>(true);
   
   // const supabase = createClient();
 
@@ -21,19 +24,39 @@ export default function Profile() {
 
 
   useEffect(() => {
+    checkifAuthenticated();
     getPostsService().then((posts: Post[]) => {
       console.log(posts);
       setMyOffers(posts);
     });
+    setLoading(false);
+
   }, []);
 
-  return (
+  const checkifAuthenticated = () => {
+      checkifAuthenticatedService().then((userr) => {
+        if (!userr) {
+          return redirect("/login");
+        }else
+        {
+          setUser(userr);
+        }
+      });
+  }
+  
+
+if (loading) {
+  return <div>Loading...</div>;
+}
+else{
+
+return (
     <div>
           <div className="flex justify-between bg-blue-500 w-screen px-5">
             <h1 className="text-xl flex justify-start" >Profile</h1>
             
             <div>
-              Welcome, Will deal with this later
+              Welcome, {user!.email}
               {/* Welcome, {user.email} */}
             </div>
           </div>
@@ -67,6 +90,5 @@ export default function Profile() {
                     </div>              
               </div>              
             </div>
-    </div>
-  );
-}
+    </div>)}}
+    

@@ -16,8 +16,8 @@ export default function Viewoffer() {
         const currentUrl = window.location.href;
         let PostID = currentUrl.split('?')[1];
         setPostID(PostID);
+    if (PostID) {
 
-        if (PostID) {
              getPostbyPostIDService(PostID)
                 .then((rpost: Post) => {
                     console.log(rpost);
@@ -47,7 +47,6 @@ export default function Viewoffer() {
     };
 
     const PostOwner = (userID: string) => {
-      console.log("")
         return getCurrentUserID()
             .then(id => id === userID)
             .catch(() => {
@@ -85,10 +84,10 @@ export default function Viewoffer() {
 
   {isPostOwner ? 
   (
-    <div>
-      <button onClick={handleEdit} className="mb-4 justify-end">Edit</button>
-      <button onClick={()=>handleDelete(post)} className="mb-4 justify-end">Delete</button>
-    </div>
+    <div className="flex justify-between text-white">
+      <button onClick={handleEdit} className="mb-4 border border-white rounded p-2 bg-sky-950 hover:bg-green-700">Edit</button>
+      <button onClick={() => handleDelete(post)} className="mb-4 bg-sky-950 border border-white rounded p-2 hover:bg-red-700">Delete</button>
+</div>
   
 )
   : null}
