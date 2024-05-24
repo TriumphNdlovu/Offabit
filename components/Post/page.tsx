@@ -17,7 +17,7 @@ export default function IPost({post}: IPostProps) {
     },[post]);
     
     return (
-
+testing git in lazyvim
       <div className="p-4 md:w-1/3">
         <div className="h-full border-2 border-gray-800 rounded-lg overflow-hidden hover:border-gray-500">
                     <img className="lg:h-48 md:h-36 w-full object-cover object-center" src={post.image} alt="Product Image" />
@@ -38,9 +38,6 @@ export default function IPost({post}: IPostProps) {
                       <div className=' text-gray-500 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-800'>
                         <FaMapPin/>
                         <h3 className="text-xs font-medium text-gray-500 mb-1"> {post.location}</h3>
-                      </div>
-
-                      <div className=' text-gray-500 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-800'>
                         <FaHandHolding/>
                         <h3 className="text-xs font-medium text-gray-500 mb-1"> {post.negotiable ? "Negotiable" : "Not Negotiable"}</h3>
                       </div>
