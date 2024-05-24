@@ -18,6 +18,7 @@ export default function IPost({post}: IPostProps) {
     
     return (
 testing git in lazyvim
+      one last config testing
       <div className="p-4 md:w-1/3">
         <div className="h-full border-2 border-gray-800 rounded-lg overflow-hidden hover:border-gray-500">
                     <img className="lg:h-48 md:h-36 w-full object-cover object-center" src={post.image} alt="Product Image" />
